@@ -7,5 +7,7 @@ import numpy as np
 # atof using import
 import locale as lo
 
+import webbrowser as web
+
 df = yf.Ticker("2330.TW").history(period="20d")
 print(df)
