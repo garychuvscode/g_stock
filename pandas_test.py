@@ -143,7 +143,7 @@ class data_obj ():
 
         return df_raw3
 
-    def obj_to_file(self, out_file_name0, trace0='', index0=False, compression0=None, test_out_index0=0, test_df=None):
+    def obj_to_file(self, out_file_name0, trace0='', index0=False, compression0=None, test_out_index0=0, test_df=0):
         '''
         this function transfer the data frame to output file
         > index default set to faulse, so there are no extra index in column 1
@@ -151,10 +151,15 @@ class data_obj ():
         > test_out_index used to check output file status
         > test_ef is the related data frame save during testing, set to 0 and will save the main
         '''
+        # this few lines just for test_df to become data frame variable
+        a = 0
+        if a == 1:
+            test_df = self.main_data_frame
+
         # for real mode output file
         out_df_buffer = self.main_data_frame
 
-        if self.sim_obj == 1 and test_out_index0 == 0:
+        if test_out_index0 == 0:
             # update file name and record to object
             self.save_file_name = out_file_name0
 
@@ -173,7 +178,7 @@ class data_obj ():
 
             pass
 
-        elif self.sim_obj == 0:
+        elif self.sim_obj == 0 and test_out_index0 != 0:
             # run the test mode saving
             # update file name and record to object
             self.test_out_index = test_out_index0
@@ -190,11 +195,7 @@ class data_obj ():
                 self.path_save_full = self.trace_default + \
                     str(self.save_file_name) + str(self.format)
 
-            # error for comparison
-            if test_df != None:
-                # change the data frame to the temp before saving
-                out_df_buffer = test_df
-
+            out_df_buffer = test_df
             out_df_buffer.to_csv(
                 self.path_save_full, index=index0, compression=compression0)
 
@@ -210,11 +211,25 @@ class data_obj ():
 
         pass
 
+    '''
+    230414 plan:
+    1. plan to separate different node data and change to single file or sheet for each node
+    2. add the algorithm of filter the good node
+    brief: calculated the average price of all the stock in this node, and lower the price is
+    is better the operation this node is doing
+    3. plan to record the
+    '''
+
+    def sort_by_index():
+
+        pass
+
 
 if __name__ == '__main__':
     #  the testing code for this file object
 
-    data_1712 = data_obj('stock_1712')
+    data_1712 = data_obj(data_title_0='stock_1712',
+                         date0='230104', stock_num0='1712', stock_name0='hsin')
 
     # set to simulation mode and record each check point file
     data_1712.sim_obj = 0
