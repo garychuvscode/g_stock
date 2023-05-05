@@ -180,7 +180,7 @@ class data_obj ():
 
         elif self.sim_obj == 0 and test_out_index0 != 0:
             # run the test mode saving
-            # update file name and record to object
+            # update file name and record to object for test mode
             self.test_out_index = test_out_index0
             self.save_file_name = 't_' + out_file_name0 + \
                 '_t_' + str(self.test_out_index)
@@ -206,6 +206,7 @@ class data_obj ():
 
         else:
             # when sim_obj == 1 , bypass all the testing result saving command
+            # (case with test_out_index != 0)
 
             pass
 
@@ -228,14 +229,25 @@ class data_obj ():
 if __name__ == '__main__':
     #  the testing code for this file object
 
+    test_index = 0
+
     data_1712 = data_obj(data_title_0='stock_1712',
                          date0='230104', stock_num0='1712', stock_name0='hsin')
 
-    # set to simulation mode and record each check point file
-    data_1712.sim_obj = 0
+    if test_index == 0:
 
-    a = data_1712.import_csv('1712_230406')
-    data_1712.two_column_to_one()
-    data_1712.obj_to_file(out_file_name0='temp')
+        '''
+        to run the testing process make file format ready for sorting
+        two column to 1 and generate the new file
+
+        next step is to add result of new file to a summary file
+        '''
+
+        # set to simulation mode and record each check point file
+        data_1712.sim_obj = 0
+
+        a = data_1712.import_csv('1712_230406')
+        data_1712.two_column_to_one()
+        data_1712.obj_to_file(out_file_name0='temp')
 
     pass
